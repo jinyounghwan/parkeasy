@@ -1,0 +1,50 @@
+{
+  "pageNo": "1", "numOfRows": "10", "totalCount": "9", "resultCode": "0", "resultMsg": "SUCCESS",
+  "PrkOprInfo": [
+    {
+      "prk_center_id": "normal", "opertn_bs_free_time": "5",
+      "basic_info": {"parking_chrge_bs_time": "30", "parking_chrge_bs_chrge": "1200", "parking_chrge_adit_unit_time": "10", "parking_chrge_adit_unit_chrge": "300"},
+      "fxamt_info": {"parking_chrge_one_day_chrge": "10000", "parking_chrge_mon_unit_chrge": "100000"},
+      "Monday": {"opertn_start_time": "010000", "opertn_end_time": "110000"},
+      "Tuesday": {"opertn_start_time": "020000", "opertn_end_time": "120000"},
+      "Wednesday": {"opertn_start_time": "030000", "opertn_end_time": "130000"},
+      "Thursday": {"opertn_start_time": "040000", "opertn_end_time": "140000"},
+      "Friday": {"opertn_start_time": "050000", "opertn_end_time": "150000"},
+      "Saturday": {"opertn_start_time": "060000", "opertn_end_time": "160000"},
+      "Sunday": {"opertn_start_time": "070000", "opertn_end_time": "170000"},
+      "Holiday": {"opertn_start_time": "080000", "opertn_end_time": "180000"}
+    },
+    {
+      "prk_center_id": "zero", "opertn_bs_free_time": "0",
+      "basic_info": {"parking_chrge_bs_time": "0", "parking_chrge_bs_chrge": "0", "parking_chrge_adit_unit_time": "000000", "parking_chrge_adit_unit_chrge": "0"},
+      "fxamt_info": {"parking_chrge_one_day_chrge": "0", "parking_chrge_mon_unit_chrge": "0"}
+    },
+    {
+      "prk_center_id": "additional-zero",
+      "basic_info": {"parking_chrge_bs_time": "30", "parking_chrge_bs_chrge": "3000", "parking_chrge_adit_unit_time": "10", "parking_chrge_adit_unit_chrge": "0"}
+    },
+    {
+      "prk_center_id": "midnight",
+      "Monday": {"opertn_start_time": "000000", "opertn_end_time": "000000"},
+      "Tuesday": {"opertn_start_time": "000000", "opertn_end_time": "180000"},
+      "Wednesday": {"opertn_start_time": "090000", "opertn_end_time": "000000"}
+    },
+    {
+      "prk_center_id": "blank", "opertn_bs_free_time": " ",
+      "basic_info": {"parking_chrge_bs_time": "", "parking_chrge_bs_chrge": "  ", "parking_chrge_adit_unit_time": null, "parking_chrge_adit_unit_chrge": ""},
+      "fxamt_info": {"parking_chrge_one_day_chrge": "", "parking_chrge_mon_unit_chrge": " "},
+      "Monday": {"opertn_start_time": "", "opertn_end_time": " "}
+    },
+    {
+      "prk_center_id": "malformed", "opertn_bs_free_time": "NaN",
+      "basic_info": {"parking_chrge_bs_time": "30분", "parking_chrge_bs_chrge": "1,200", "parking_chrge_adit_unit_time": "1.5", "parking_chrge_adit_unit_chrge": "2147483648"},
+      "fxamt_info": {"parking_chrge_one_day_chrge": "원", "parking_chrge_mon_unit_chrge": "N/A"},
+      "Monday": {"opertn_start_time": "240000", "opertn_end_time": "126000"},
+      "Tuesday": {"opertn_start_time": "0900", "opertn_end_time": "09:00:00"},
+      "Wednesday": {"opertn_start_time": "0", "opertn_end_time": "000000~000000"}
+    },
+    {"prk_center_id": "monthly-only", "fxamt_info": {"parking_chrge_mon_unit_chrge": " 250000 "}},
+    {"prk_center_id": "time-only", "Saturday": {"opertn_start_time": " 090000 ", "opertn_end_time": " 220000 "}},
+    {"prk_center_id": "missing"}
+  ]
+}

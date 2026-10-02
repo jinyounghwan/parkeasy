@@ -1,0 +1,21 @@
+[Unit]
+Description=ParkEasy staging read-only web
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=parkeasy
+Group=parkeasy
+WorkingDirectory=/srv/parkeasy/backend-current
+EnvironmentFile=/etc/parkeasy/staging.env
+ExecStart=/usr/bin/java -jar /srv/parkeasy/backend-current/backend.jar --spring.profiles.active=prod --server.address=127.0.0.1 --server.port=8080 --server.forward-headers-strategy=framework --spring.flyway.enabled=false --spring.jpa.hibernate.ddl-auto=none --spring.sql.init.mode=never --parkeasy.admin.enabled=false --parkeasy.sync.facility.enabled=false --parkeasy.sync.operation.enabled=false --parkeasy.sync.realtime.enabled=false
+Restart=no
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

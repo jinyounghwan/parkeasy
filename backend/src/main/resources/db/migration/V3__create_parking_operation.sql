@@ -1,0 +1,35 @@
+CREATE TABLE parking_operation (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    parking_lot_id BIGINT NOT NULL,
+    base_free_time INT NULL,
+    base_time INT NULL,
+    base_fee INT NULL,
+    additional_time INT NULL,
+    additional_fee INT NULL,
+    daily_max_fee INT NULL,
+    monthly_fee INT NULL,
+    monday_open_time TIME NULL,
+    monday_close_time TIME NULL,
+    tuesday_open_time TIME NULL,
+    tuesday_close_time TIME NULL,
+    wednesday_open_time TIME NULL,
+    wednesday_close_time TIME NULL,
+    thursday_open_time TIME NULL,
+    thursday_close_time TIME NULL,
+    friday_open_time TIME NULL,
+    friday_close_time TIME NULL,
+    saturday_open_time TIME NULL,
+    saturday_close_time TIME NULL,
+    sunday_open_time TIME NULL,
+    sunday_close_time TIME NULL,
+    holiday_open_time TIME NULL,
+    holiday_close_time TIME NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_parking_operation_parking_lot_id (parking_lot_id),
+    CONSTRAINT fk_parking_operation_parking_lot
+        FOREIGN KEY (parking_lot_id) REFERENCES parking_lot (id)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;

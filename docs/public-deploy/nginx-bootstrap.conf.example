@@ -1,0 +1,13 @@
+# 인증서 발급 전만 사용. http context에 include.
+# 실제 domain으로 치환하고 HTTPS 설정과 동시에 활성화하지 않는다.
+server {
+    listen 80;
+    server_name parkeasy.example.com;
+    access_log off;
+    error_log /dev/null crit;
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+        try_files $uri =404;
+    }
+    location / { return 503; }
+}

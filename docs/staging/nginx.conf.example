@@ -1,0 +1,56 @@
+# http context; query/header/body를 access log에 기록하지 않는다.
+log_format parkeasy_safe '$remote_addr $request_method $uri $status $request_time';
+
+server {
+    listen 80;
+    server_name staging.parkeasy.invalid;
+    access_log /var/log/nginx/parkeasy-staging-access.log parkeasy_safe;
+    error_log /dev/null crit;
+    return 308 https://staging.parkeasy.invalid$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name staging.parkeasy.invalid;
+    ssl_certificate /etc/nginx/tls/parkeasy-staging/fullchain.pem;
+    ssl_certificate_key /etc/nginx/tls/parkeasy-staging/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    server_tokens off;
+    root /srv/parkeasy/frontend-current/dist;
+    index index.html;
+    client_max_body_size 1m;
+    access_log /var/log/nginx/parkeasy-staging-access.log parkeasy_safe;
+    # nginx error log는 오류 시 request/query를 포함할 수 있다. 이 read-only
+    # 리허설 vhost에서는 비활성화하고 status/latency와 안전한 앱 로그로 관측한다.
+    error_log /dev/null crit;
+
+    location = /api/admin { return 404; }
+    location ^~ /api/admin/ { return 404; }
+    # exact match: query string 유무와 무관하게 전체목록만 차단한다.
+    location = /api/parking-lots { return 404; }
+    location = /api/parking-lots/ { return 404; }
+    location = /api { return 404; }
+
+    location /api/ {
+        # URI suffix 없이 /api 경로를 그대로 보존한다.
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        # 단일 edge 구조: 외부에서 위조한 forwarded 체인은 폐기한다.
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Forwarded "";
+        proxy_set_header Connection "";
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 15s;
+        proxy_read_timeout 15s;
+        proxy_intercept_errors off;
+    }
+    location ~ /\. { return 404; }
+    location /assets/ { try_files $uri =404; }
+    location = /index.html { add_header Cache-Control "no-store"; }
+    location / { try_files $uri $uri/ /index.html; }
+}
